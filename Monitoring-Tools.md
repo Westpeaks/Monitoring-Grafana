@@ -2,7 +2,7 @@
 
 ### The following provides a detailed description of the UI elements that make up the Grafana dashboard that are important for monitoring site health. This will be your main tool for discovering near misses as a TSE, Dev, or SRE and will assist you in resolving site issues proactively. 
 
-#### Grafana Sections
+### Grafana Sections
 
 ℹ️ The Grafana monitoring UI provides a comprehensive dashboard for checking and monitoring the health of each site. It is accessible from your applications and Monitoring dashboard at https://hooli.ai/if/user/#/library . Once logged in, select the Prometheus Grafana tile.
 
@@ -15,9 +15,10 @@ There are four major sections that need to be monitored in the main dashboard:
 3. **Server Services**
 4. **Windows Disk Space, CPU, and Memory**
 
-While exploring the different sections, the appropriate response to any issues discovered should be a site assessment. 
+While exploring the different sections, the appropriate response to any issues discovered should be a site assessment. Let's take a look at the different sections.
 
-#### Rabbit MQ and Solr
+
+### Rabbit MQ and Solr
 
 ![image](https://github.com/user-attachments/assets/f8d25f1c-a1ba-4006-b07d-495ad3b257e1)
 
@@ -40,3 +41,8 @@ Unaknowledged messages may vary between 50 to 300 messages at any given time. Be
 
 This queue will function very much the same as the unacked queue but you may see slightly larger back-ups (as pictured). What should be observed in this queue is if back-ups are progressing larger and larger, or trending upwards. 
 
+![Solr Scrub redact](https://github.com/user-attachments/assets/ad0dff43-c8d8-4b26-a521-34a26ce63863)
+
+**Solr Ping**
+
+Prometheus pings the different Solr nodes to determine whether or not they are up and functioning. The results of these are then displayed in the Grafana dashboard. If drops are observed here, this could mean that Solr is crashing. The Solr Admin console will need to be investigated at the affected site for more information.
