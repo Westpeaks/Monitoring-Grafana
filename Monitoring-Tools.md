@@ -2,7 +2,9 @@
 
 ### The following provides a detailed description of the UI elements that make up the Grafana dashboard that are important for monitoring site health. This will be your main tool for discovering near misses as a TSE, Dev, or SRE and will assist you in resolving site issues proactively. 
 
-### Grafana Sections
+
+**Grafana Sections**
+---
 
 ℹ️ The Grafana monitoring UI provides a comprehensive dashboard for checking and monitoring the health of each site. It is accessible from your applications and Monitoring dashboard at https://hooli.ai/if/user/#/library . Once logged in, select the Prometheus Grafana tile.
 
@@ -18,7 +20,8 @@ There are four major sections that need to be monitored in the main dashboard:
 While exploring the different sections, the appropriate response to any issues discovered should be a site assessment. Let's take a look at the different sections.
 
 
-### Rabbit MQ and Solr
+**Rabbit MQ and Solr**
+---
 
 ![image](https://github.com/user-attachments/assets/f8d25f1c-a1ba-4006-b07d-495ad3b257e1)
 
@@ -46,3 +49,63 @@ This queue will function very much the same as the unacked queue but you may see
 **Solr Ping**
 
 Prometheus pings the different Solr nodes to determine whether or not they are up and functioning. The results of these are then displayed in the Grafana dashboard. If drops are observed here, this could mean that Solr is crashing. The Solr Admin console will need to be investigated at the affected site for more information.
+
+
+**Mirth**
+---
+
+![image](https://github.com/user-attachments/assets/436affb9-d150-44f0-a340-87dc5fa110ec)
+
+**Mirth**
+
+For a number of sites, the data transform begins with a queueing program that ingests and processes incoming documents entering the system. At older sites this is done through a custom created program. Many newer sites have now transitioned to Mirth. As a support engineer, SRE, or dev the main responsibility is to monitor the Mirth queue and make sure that there is not a back-up of incoming messages. A large back-up of messages within any Mirth queue can indicate larger issues with incoming documents at the site (Ex. Issues in Solr). This may also indicate larger issues within Mirth and its configuration.
+
+**Windows and Custom Services**
+---
+
+Windows and custom configured services on the application production server should be running at all times to ensure the integrity of Illuminate applications. There are more services that will be site dependent, but these first four services are shared between all sites. If you are in a site and notice that one the these first four services are down, please restart the service and troubleshoot any potential issues. 
+
+![image](https://github.com/user-attachments/assets/adc21f3e-46a6-4418-b45f-fe3536b82d61)
+
+**Auditor Status**
+
+The Auditor Service is used at certain times by a number of applications and will affect their functionality if down. When data is viewed, dumped or transferred, status updates will post to this service and application changes will occur based on the updates provided. Auditor primarily affects alerting in InSight, the functionality of the Webhooks service, and processes within Application A. This service needs to be running to ensure the integrity of Hooli applications. When it is running it will display the following.
+
+![NWH Scrub](https://github.com/user-attachments/assets/1ef188b1-9485-425a-a3c8-bd241949d595)
+
+**Webhooks Service**
+
+The Webhooks service gathers status changes via webhooks. The alerted changes are then stored and used by Hooli applications. Working in tandem with the Auditor service, Hooli applications then make updates based on the status changes. As with the previous screenshot, the service will display in Grafana as running if it is up. 
+
+![image](https://github.com/user-attachments/assets/cbd28e52-01c5-4320-9cd1-ee52d752fd23)
+
+**Sessions Status**
+
+The Session service will give information on what processes are running(active) under a user’s login session and who is using that session. The service will display in Grafana as running if it is up. 
+
+![image](https://github.com/user-attachments/assets/d111b333-0e54-4ac5-b3b5-283594711880)
+
+**IIS Service**
+
+The are several applications and their dependent services that use Windows Internet Information Services (IIS). IIS is a flexible, general-purpose web server from Microsoft that runs on Windows systems to serve requested HTML pages or files. An IIS web server accepts requests from remote client computers and returns the appropriate response. The service will display in Grafana as running if it is up. It is integral to the functionality of Illuminate’s web apps. 
+
+
+**Storage and CPU**
+---
+
+![image](https://github.com/user-attachments/assets/df331e17-9654-4ec3-bd4a-03170b1b76f4)
+
+**Disk Space Storage**
+
+It is important to monitor the storage of the specifically the C Drive as it reflective of the current storage available in the application production server. Other drives can be monitored, but there storage usage and their overages will not affect production applications. 
+
+Of the Linux nodes, the main node storage to monitor will be the nodes that contains disk space for the Postgres database. This will typically be listed under the directory of /var/lib/pg_data:
+
+![image](https://github.com/user-attachments/assets/0ec21b94-602b-4785-9644-20a83175d9a0)
+
+![image](https://github.com/user-attachments/assets/37ff5748-cd5f-4191-a107-826e00741238)
+
+**CPU and Memory Utilization**
+
+CPU spikes may not always indicate poor site health, but continued high CPU usage can potentially cause disruption of service. If this occurs at a site, then its root cause will need to be investigated. Memory can cause much more of a concern immediately. Once memory has been allocated by a number of potential programs and services, it will not allow applications to launch. Also, services on the server can allocate too much memory, restricting resources on the server. It is important to monitor these and validate the use of these resources through the Task Manager on the application production server.
+
