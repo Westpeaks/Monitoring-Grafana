@@ -27,7 +27,7 @@ While exploring the different sections, the appropriate response to any issues d
 
 **Rabbit MQ ready messages:**
 
-Rabbit MQ monitors incoming HL7 and other documents that are waiting to process. The RabbitMQ ready messages view pane will represent all queues of incoming documents into the system. This means that if a back-up is occurring within any internal Rabbit queue, it will display this in Grafana in the ready messages view pane. If there are back-ups occurring in more than one queue, the number of backed-up messages will combine in the RabbitMQ ready messages view pane. Significant Spikes or trends upward in the documents waiting to process may indicate a back-up issue (setting the timeframe for granularity in the top right corner of the UI is important, default is usually 30 minutes). Back-up issues can occur for a number of reasons.  
+Rabbit MQ monitors incoming HL7 and other documents that are waiting to process. The RabbitMQ ready messages view pane will represent all queues of incoming documents into the system. This means that if a back-up is occurring within any internal Rabbit queue, it will display this in Grafana in the ready messages view pane. If there are back-ups occurring in more than one queue, the number of backed-up messages will combine in the RabbitMQ ready messages view pane. Significant spikes or trends upward in the documents waiting to process may indicate a back-up issue (setting the timeframe for granularity in the top right corner of the UI is important, default is usually 30 minutes). Back-up issues can occur for a number of reasons.  
 - Failure to process records in the incoming queue manager.
 - All of the allocated RAM in the application-production server is being used by other processes.
 - Important services are impaired or not running.
@@ -36,7 +36,7 @@ Rabbit MQ monitors incoming HL7 and other documents that are waiting to process.
 
 **RabbitMQ unacked messages**
 
-Unaknowledged messages may vary between 50 to 300 messages at any given time. Because this process of acknowledgement doesn’t occur immediately, these small back-ups can occur. This can become an issue when the back-up exceeds the normal average and begins to escalate.  Should a larger back-up occur, the site will need to be investigated. Unacknowledged messages backing up will typically indicate an issue with Mirth which should be investigated.
+Unacknowledged messages may vary between 50 to 300 messages at any given time. Because this process of acknowledgement doesn’t occur immediately, these small back-ups can occur. This can become an issue when the back-up exceeds the normal average and begins to escalate.  Should a larger back-up occur, the site will need to be investigated. Unacknowledged messages backing up will typically indicate an issue with Mirth which should be investigated.
 
 ![image](https://github.com/user-attachments/assets/2225c76a-adc5-4324-bc3e-95634af95512)
 
@@ -63,13 +63,13 @@ For a number of sites, the data transform begins with a queueing program that in
 **Windows and Custom Services**
 ---
 
-Windows and custom configured services on the application production server should be running at all times to ensure the integrity of Illuminate applications. There are more services that will be site dependent, but these first four services are shared between all sites. If you are in a site and notice that one the these first four services are down, please restart the service and troubleshoot any potential issues. 
+Windows and custom configured services on the application production server should be running at all times to ensure the integrity of Hooli applications. There are more services that will be site dependent, but these first four services are shared between all sites. If you are in a site and notice that one the these first four services are down, please restart the service and troubleshoot any potential issues. 
 
 ![image](https://github.com/user-attachments/assets/adc21f3e-46a6-4418-b45f-fe3536b82d61)
 
 **Auditor Status**
 
-The Auditor Service is used at certain times by a number of applications and will affect their functionality if down. When data is viewed, dumped or transferred, status updates will post to this service and application changes will occur based on the updates provided. Auditor primarily affects alerting in InSight, the functionality of the Webhooks service, and processes within Application A. This service needs to be running to ensure the integrity of Hooli applications. When it is running it will display the following.
+The Auditor Service is used at certain times by a number of applications and will affect their functionality if down. When data is viewed, dumped or transferred, status updates will post to this service and application changes will occur based on the updates provided. Auditor primarily affects alerting in the search application, the functionality of the Webhooks service, and processes within application A. This service needs to be running to ensure the integrity of Hooli applications. When it is running it will display the following.
 
 ![NWH Scrub](https://github.com/user-attachments/assets/1ef188b1-9485-425a-a3c8-bd241949d595)
 
@@ -97,7 +97,7 @@ The are several applications and their dependent services that use Windows Inter
 
 **Disk Space Storage**
 
-It is important to monitor the storage of the specifically the C Drive as it reflective of the current storage available in the application production server. Other drives can be monitored, but there storage usage and their overages will not affect production applications. 
+It is important to monitor the storage of specifically the C Drive as it reflective of the current storage available in the application production server. Other drives can be monitored, but their storage usage and their overages will not affect production applications. 
 
 Of the Linux nodes, the main node storage to monitor will be the nodes that contains disk space for the Postgres database. This will typically be listed under the directory of /var/lib/pg_data:
 
